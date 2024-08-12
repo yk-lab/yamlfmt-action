@@ -1,0 +1,120 @@
+name: 'yamlfmt action'
+description: 'Format YAML files using yamlfmt'
+
+branding:
+  icon: zap
+  color: gray-dark
+
+inputs:
+  path:
+    description: 'Path to the YAML file or directory to format'
+    required: false
+    default: '.'
+  dstar:
+    description: 'Enable double-star expansion'
+    required: false
+    default: ''
+  exclude:
+    description: 'Exclude files matching the given pattern'
+    required: false
+    default: ''
+  gitignore_excludes:
+    description: 'Exclude files matching the patterns in .gitignore'
+    required: false
+    default: true
+  gitignore_path:
+    description: 'Path to the .gitignore file'
+    required: false
+    default: ''
+  extensions:
+    description: 'Comma-separated list of file extensions to include'
+    required: false
+    default: ''
+  formatter:
+    description: 'Configures the formatter to use'
+    required: false
+    default: ''
+
+runs:
+  using: "composite"
+  steps:
+    - name: Set up Go
+      uses: actions/setup-go@v5
+      with:
+        go-version: "1.22"
+        check-latest: true
+        cache: false
+
+    - id: get_gobin
+      name: Get GOBIN
+      run: |
+        gobin=$(go env GOBIN)
+        if [ -z "$gobin" ]; then
+          gobin=$(go env GOPATH)/bin
+        fi
+        echo "path=$gobin" >> $GITHUB_OUTPUT
+      shell: bash
+
+    - id: get_yamlfmt_version
+      name: Get yamlfmt latest version
+      run: echo "version=$(go list -m -versions -json github.com/google/yamlfmt | jq -r '.Versions[-1]')" >> $GITHUB_OUTPUT
+      shell: bash
+
+    - id: cache_gobin
+      name: Cache GOBIN
+      uses: actions/cache@v4
+      with:
+        path: ${{ steps.get_gobin.outputs.path }}
+        key: yamlfmt-${{ runner.os }}-${{ runner.arch }}-${{ steps.get_yamlfmt_version.outputs.version }}
+
+    - name: Install yamlfmt
+      if: steps.cache_gobin.outputs.cache-hit != 'true'
+      run: go install github.com/google/yamlfmt/cmd/yamlfmt@latest
+      shell: bash
+
+    - id: build_command
+      name: Build command options
+      run: |
+        cmd="yamlfmt -lint"
+
+        # Check if 'path' is not the default value
+        if [ "${{ inputs.path }}" != "" ]; then
+          cmd="$cmd ${{ inputs.path }}"
+        fi
+
+        # Check if 'dstar' is enabled
+        if [ "${{ inputs.dstar }}" != "" ]; then
+          cmd="$cmd --dstar ${{ inputs.dstar }}"
+        fi
+
+        # Check if 'exclude' has a value
+        if [ "${{ inputs.exclude }}" != "" ]; then
+          cmd="$cmd --exclude ${{ inputs.exclude }}"
+        fi
+
+        # Check if 'gitignore_excludes' is true
+        if [ "${{ inputs.gitignore_excludes }}" == "true" ]; then
+          cmd="$cmd --gitignore-excludes"
+        fi
+
+        # Check if 'gitignore_path' has a value
+        if [ "${{ inputs.gitignore_path }}" != "" ]; then
+          cmd="$cmd --gitignore-path ${{ inputs.gitignore_path }}"
+        fi
+
+        # Check if 'extensions' has a value
+        if [ "${{ inputs.extensions }}" != "" ]; then
+          cmd="$cmd --extensions ${{ inputs.extensions }}"
+        fi
+
+        # Check if 'formatter' has a value
+        if [ "${{ inputs.formatter }}" != "" ]; then
+          cmd="$cmd --formatter ${{ inputs.formatter }}"
+        fi
+
+        echo "command=$cmd" >> $GITHUB_OUTPUT
+      shell: bash
+
+    - name: Run yamlfmt
+      run: ${{ steps.build_command.outputs.command }}
+      shell: bash
