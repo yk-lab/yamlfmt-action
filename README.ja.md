@@ -8,6 +8,33 @@
 
 YAML ファイルを自動的に整形するための GitHub Actions 用アクションです。コードの一貫性を保ち、レビューやデバッグを容易にします。
 
+## TL;DR
+
+```yaml
+name: YAML Formatting
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    types: [opened, synchronize, reopened]
+  workflow_dispatch:
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: yamllint
+        uses: reviewdog/action-yamllint@v1
+        with:
+          github_token: ${{ secrets.github_token }}
+          fail_on_error: true
+      - name: yamlfmt
+        uses: yk-lab/yamlfmt-action@v1
+```
+
 ## 特徴
 
 - **自動フォーマット**: `yamlfmt` を使用して YAML ファイルを統一的に整形。
@@ -50,6 +77,7 @@ jobs:
 
 アクションには以下の入力パラメータがあります。
 
+- `version`: `yamlfmt` のバージョン (デフォルト: `latest`, 例: `v0.13.0`)
 - `path`: フォーマットする YAML ファイルまたはディレクトリのパス
 - `dstar`: ダブルスター展開を有効にする
 - `exclude`: 指定したパターンに一致するファイルを除外

@@ -8,6 +8,33 @@ English | [日本語](README.ja.md)
 
 Automatically format YAML files using `yamlfmt` in your GitHub Actions workflows. This action helps maintain consistent code style, making reviews and debugging easier.
 
+## TL;DR
+
+```yaml
+name: YAML Formatting
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    types: [opened, synchronize, reopened]
+  workflow_dispatch:
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: yamllint
+        uses: reviewdog/action-yamllint@v1
+        with:
+          github_token: ${{ secrets.github_token }}
+          fail_on_error: true
+      - name: yamlfmt
+        uses: yk-lab/yamlfmt-action@v1
+```
+
 ## Features
 
 - **Automatic Formatting**: Uses `yamlfmt` to standardize the formatting of YAML files.
@@ -50,6 +77,7 @@ jobs:
 
 The action supports the following input parameters:
 
+- `version`: Version of `yamlfmt` to use (default: `latest`, e.g., `v0.13.0`)
 - `path`: Path to the YAML file or directory to format
 - `dstar`: Enable double-star expansion
 - `exclude`: Exclude files matching the specified pattern
