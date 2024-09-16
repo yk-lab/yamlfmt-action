@@ -1,8 +1,9 @@
 # yamlfmt-action
 
-![GitHub release (latest by date)](https://img.shields.io/github/v/release/yk-lab/yamlfmt-action)
-![GitHub license](https://img.shields.io/github/license/yk-lab/yamlfmt-action)
-![GitHub stars](https://img.shields.io/github/stars/yk-lab/yamlfmt-action?style=social)
+[![GitHub release (latest by date)](https://img.shields.io/github/v/release/yk-lab/yamlfmt-action?style=for-the-badge)](https://github.com/yk-lab/yamlfmt-action/releases)
+[![GitHub license](https://img.shields.io/github/license/yk-lab/yamlfmt-action?style=for-the-badge)](https://github.com/yk-lab/yamlfmt-action?tab=MIT-1-ov-file#readme)
+[![GitHub stars](https://img.shields.io/github/stars/yk-lab/yamlfmt-action?style=for-the-badge)](https://github.com/yk-lab/yamlfmt-action/stargazers)
+[![GitHub watchers](https://img.shields.io/github/watchers/yk-lab/yamlfmt-action?style=for-the-badge)](https://github.com/yk-lab/yamlfmt-action/watchers)
 
 [English](README.md) | 日本語
 
