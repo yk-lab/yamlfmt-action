@@ -4,6 +4,7 @@
 [![GitHub license](https://img.shields.io/github/license/yk-lab/yamlfmt-action?style=for-the-badge)](https://github.com/yk-lab/yamlfmt-action?tab=MIT-1-ov-file#readme)
 [![GitHub stars](https://img.shields.io/github/stars/yk-lab/yamlfmt-action?style=for-the-badge)](https://github.com/yk-lab/yamlfmt-action/stargazers)
 [![GitHub watchers](https://img.shields.io/github/watchers/yk-lab/yamlfmt-action?style=for-the-badge)](https://github.com/yk-lab/yamlfmt-action/watchers)
+[![DeepWiki](https://img.shields.io/badge/DeepWiki-yk--lab%2Fyamlfmt--action-blue.svg?style=for-the-badge)](https://deepwiki.com/yk-lab/yamlfmt-action)
 
 [English](README.md) | 日本語
 
