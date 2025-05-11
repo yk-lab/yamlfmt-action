@@ -5,6 +5,7 @@
 [![GitHub stars](https://img.shields.io/github/stars/yk-lab/yamlfmt-action?style=for-the-badge)](https://github.com/yk-lab/yamlfmt-action/stargazers)
 [![GitHub watchers](https://img.shields.io/github/watchers/yk-lab/yamlfmt-action?style=for-the-badge)](https://github.com/yk-lab/yamlfmt-action/watchers)
 [![DeepWiki](https://img.shields.io/badge/DeepWiki-yk--lab%2Fyamlfmt--action-blue.svg?style=for-the-badge)](https://deepwiki.com/yk-lab/yamlfmt-action)
+![CodeRabbit Pull Request Reviews](https://img.shields.io/coderabbit/prs/github/yk-lab/yamlfmt-action?style=for-the-badge)
 
 [English](README.md) | 日本語
 
